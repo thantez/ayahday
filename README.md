@@ -19,6 +19,7 @@ then:
 ```bash
 cd ayahday
 pip install -r requirements.txt
+python logic.py
 ```
 
 # TODO
