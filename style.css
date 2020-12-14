@@ -68,4 +68,10 @@
 @define-color wm_icons_unfocused_prelight @selected_bg_color;
 @define-color wm_icons_unfocused_pressed shade(@selected_bg_color, 0.8);
 
+/* special buttons */
+@define-color exit_btn rgb(185, 74, 72);
+@define-color exit_hover_btn rgb(215, 104, 102);
+@define-color help_btn rgb(58, 135, 173);
+@define-color help_hovor_btn rgb(88, 165, 203);
+
 @import url("gtk.css");

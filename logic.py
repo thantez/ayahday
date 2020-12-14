@@ -31,6 +31,7 @@ builder.add_from_file('gui.glade')
 gui = builder.get_object('Window')
 ayah_img = builder.get_object('AyahImg')
 translation_label = builder.get_object('TranslationLabel')
+ayah_label = builder.get_object('AyahLabel')
 ## Set signals
 gui.connect("destroy", lambda _: exit(1))
 
@@ -45,21 +46,29 @@ BISMILLAH = SOUND_SOURCE + '/001001.mp3'
 
 # Function declarations
 def get_verse_key(ayah_json):
-    if ayah_json["ok"]:
-        surah = ayah_json["result"]["sura"]
-        ayah = ayah_json["result"]["aya"]
+    if ayah_json['ok']:
+        surah = ayah_json['result']['sura']
+        ayah = ayah_json['result']['aya']
         with_zero_surah = surah.zfill(3)
         with_zero_ayah = ayah.zfill(3)
+        surah_name = ayah_json['result']['sura_detail']['name']
+        translation = ayah_json['result']['translate']['text']
         return (
             (
                 f'{surah}_{ayah}',
                 f'{with_zero_surah}{with_zero_ayah}'
             ),
-            ayah_json["result"]["translate"]["text"]
+            translation,
+            surah_name
         )
 
-def set_translation(translation):
-    translation_label.set_text(translation)
+def set_information(verse_key, surah_name):
+    [_, ayah] = verse_key.split("_")
+    ayah_label.set_text(f'آیه {ayah} سوره {surah_name}')
+
+def set_translation(verse_key, translation):
+    [_, ayah] = verse_key.split("_")
+    translation_label.set_text(f'{translation} ({ayah})')
 
 def get_image(verse_key):
     image_url = f'{PIC_SOURCE}/{verse_key}.png'
@@ -79,11 +88,16 @@ def play_audio(url, name):
 # Logic of app
 ## Get information about ayah for today
 ayah_for_this_day = load(urlopen(AYAH_API_URL))
-((upper_verse_key, verse_key), translation) = get_verse_key(ayah_for_this_day)
+(
+    (split_verse_key, verse_key),
+    translation,
+    surah_name
+) = get_verse_key(ayah_for_this_day)
 
 ## Showable things will download and present
-set_translation(translation)
-image = get_image(upper_verse_key)
+set_information(split_verse_key, surah_name)
+set_translation(split_verse_key, translation)
+image = get_image(split_verse_key)
 set_image(image)
 gui.show()
 

@@ -30,16 +30,122 @@ Author: Thantez
   <!-- interface-authors Thantez -->
   <object class="GtkWindow" id="Window">
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Ayah Day</property>
     <property name="resizable">False</property>
-    <property name="default-width">800</property>
-    <property name="default-height">600</property>
+    <property name="default-width">900</property>
+    <property name="default-height">700</property>
+    <property name="decorated">False</property>
     <signal name="destroy" handler="onQuit" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkImage" id="HelpBtn">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="has-focus">True</property>
+                <property name="xpad">15</property>
+                <property name="pixel-size">15</property>
+                <property name="icon-name">dialog-information</property>
+                <style>
+                  <class name="help"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="opacity">0.6</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="AyahLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="opacity">0.8</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                <property name="label" translatable="yes">آیه: سوره:</property>
+                <property name="justify">center</property>
+                <property name="single-line-mode">True</property>
+                <attributes>
+                  <attribute name="font-desc" value="Vazir FD-WOL Bold 10"/>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="opacity">0.6</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage" id="ExitBtn">
+                <property name="visible">True</property>
+                <property name="app-paintable">True</property>
+                <property name="can-focus">True</property>
+                <property name="has-focus">True</property>
+                <property name="xpad">15</property>
+                <property name="pixel-size">15</property>
+                <property name="icon-name">application-exit</property>
+                <property name="use-fallback">True</property>
+                <style>
+                  <class name="exit"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="opacity">0.6</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
         <child>
           <object class="GtkScrolledWindow" id="Container">
             <property name="visible">True</property>
@@ -76,18 +182,7 @@ Author: Thantez
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSeparator">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -97,18 +192,38 @@ Author: Thantez
                         <property name="label-xalign">0</property>
                         <property name="shadow-type">none</property>
                         <child>
-                          <object class="GtkLabel" id="TranslationLabel">
+                          <object class="GtkScrolledWindow">
                             <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <property name="label" translatable="yes">ترجمه هنوز دریافت نشده‌است.</property>
-                            <attributes>
-                              <attribute name="font-desc" value="Vazir Medium 10"/>
-                              <attribute name="style" value="normal"/>
-                              <attribute name="weight" value="medium"/>
-                              <attribute name="scale" value="1"/>
-                            </attributes>
+                            <property name="can-focus">True</property>
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="window-placement">top-right</property>
+                            <child>
+                              <object class="GtkViewport">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkLabel" id="TranslationLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">45</property>
+                                    <property name="margin-end">45</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="vexpand">True</property>
+                                    <property name="label" translatable="yes">ترجمه هنوز دریافت نشده‌است.</property>
+                                    <property name="justify">fill</property>
+                                    <property name="wrap">True</property>
+                                    <property name="wrap-mode">word-char</property>
+                                    <property name="selectable">True</property>
+                                    <attributes>
+                                      <attribute name="font-desc" value="Vazir FD-WOL 13"/>
+                                      <attribute name="style" value="normal"/>
+                                      <attribute name="weight" value="medium"/>
+                                      <attribute name="scale" value="1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
                           </object>
                         </child>
                         <child type="label_item">
@@ -118,7 +233,19 @@ Author: Thantez
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="height-request">10</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </object>
@@ -129,7 +256,7 @@ Author: Thantez
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
