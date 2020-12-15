@@ -13,6 +13,15 @@ from sys import exit
 from tafsir_information import db
 from urllib.request import urlretrieve, urlopen
 
+# Constants declaration ------------- !
+AYAH_API_URL = 'https://salamquran.com/fa/api/v6/aya/day'
+PIC_SOURCE = 'http://www.everyayah.com/data/images_png'
+SOUND_SOURCE = 'http://www.everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps'
+TRANSLATE_SOURCE = 'https://dl.salamquran.com/ayat/makarem.fa.kabiri-translation-16'
+TAFSIR_SOURCE = 'https://dl.salamquran.com/ayat/qaraati.fa.qaraati-tafsir-16'
+AOZOBILLAH = SOUND_SOURCE + '/001000.mp3'
+BISMILLAH = SOUND_SOURCE + '/001001.mp3'
+
 # Components definitions
 ## CSS provider
 ### I wrote code from this: https://gist.github.com/carlos-jenkins/8923124
@@ -34,15 +43,6 @@ translation_label = builder.get_object('TranslationLabel')
 ayah_label = builder.get_object('AyahLabel')
 ## Set signals
 gui.connect("destroy", lambda _: exit(1))
-
-# Constants declaration ------------- !
-AYAH_API_URL = 'https://salamquran.com/fa/api/v6/aya/day'
-PIC_SOURCE = 'http://www.everyayah.com/data/images_png'
-SOUND_SOURCE = 'http://www.everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps'
-TRANSLATE_SOURCE = 'https://dl.salamquran.com/ayat/makarem.fa.kabiri-translation-16'
-TAFSIR_SOURCE = 'https://dl.salamquran.com/ayat/qaraati.fa.qaraati-tafsir-16'
-AOZOBILLAH = SOUND_SOURCE + '/001000.mp3'
-BISMILLAH = SOUND_SOURCE + '/001001.mp3'
 
 # Function declarations
 def get_verse_key(ayah_json):
