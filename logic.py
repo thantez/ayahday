@@ -33,6 +33,7 @@ Gtk.StyleContext.add_provider_for_screen(
     screen, provider,
     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
 )
+
 ## Main components
 builder = Gtk.Builder()
 builder.add_from_file('gui.glade')
@@ -41,8 +42,11 @@ gui = builder.get_object('Window')
 ayah_img = builder.get_object('AyahImg')
 translation_label = builder.get_object('TranslationLabel')
 ayah_label = builder.get_object('AyahLabel')
+exit_btn = builder.get_object('ExitBtn')
+
 ## Set signals
 gui.connect("destroy", lambda _: exit(1))
+exit_btn.connect("clicked", lambda _: exit(1))
 
 # Function declarations
 def get_verse_key(ayah_json):

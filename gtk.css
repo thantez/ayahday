@@ -534,15 +534,6 @@ GtkImage:disabled {
     background-color: transparent;
 }
 
-.exit {
-    color: @theme_fg_color;
-    background-color: @exit_btn;
-}
-.exit:hover {
-    color: @theme_fg_color;
-    background-color: @exit_hover_btn;
-}
-
 .help {
     color: @theme_fg_color;
     background-color: @help_btn;
@@ -3210,4 +3201,74 @@ GtkBubbleWindow .toolbar {
 .window-frame:backdrop {
     box-shadow: 0 3px 5px 1px alpha(black, 0.5),
                 0 0 0 1px mix(shade(@toolbar_bg_color, 0.7), @toolbar_fg_color, 0.12);
+}
+
+.ayah-label {
+    border-bottom: 1px solid alpha(black, 0.3);
+}
+
+.exit {
+    -GtkWidget-outline-offset: 1;
+    -GtkWidget-outline-width: 0;
+
+    border-width: 0px;
+    border-radius: 0;
+    border-style: solid;
+    border-color: shade(@exit_btn, 1.08);
+    background-color: shade(@exit_btn, 1.08);
+    background-image: none;
+    color: @theme_fg_color;
+}
+
+.exit:hover {
+    background-color: shade(@exit_btn, 1.10);
+    background-image: none;
+}
+
+.exit:active {
+    background-color: shade(@exit_btn, 0.95);
+    background-image: none;
+}
+
+.exit:disabled {
+    background-color: shade(@exit_btn, 0.9);
+    background-image: none;
+}
+
+.exit:active *:disabled {
+    background-color: shade(@exit_btn, 0.80);
+    background-image: none;
+}
+
+.help {
+    -GtkWidget-outline-offset: 1;
+    -GtkWidget-outline-width: 0;
+
+    border-width: 0px;
+    border-radius: 0;
+    border-style: solid;
+    border-color: shade(@help_btn, 1.08);
+    background-color: shade(@help_btn, 1.08);
+    background-image: none;
+    color: @theme_fg_color;
+}
+
+.help:hover {
+    background-color: shade(@help_btn, 1.10);
+    background-image: none;
+}
+
+.help:active {
+    background-color: shade(@help_btn, 0.95);
+    background-image: none;
+}
+
+.help:disabled {
+    background-color: shade(@help_btn, 0.9);
+    background-image: none;
+}
+
+.help:active *:disabled {
+    background-color: shade(@help_btn, 0.80);
+    background-image: none;
 }
