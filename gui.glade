@@ -36,6 +36,7 @@ Author: Thantez
     <property name="resizable">False</property>
     <property name="default-width">900</property>
     <property name="default-height">700</property>
+    <property name="icon">icon.png</property>
     <property name="decorated">False</property>
     <signal name="destroy" handler="onQuit" swapped="no"/>
     <child>
@@ -53,6 +54,7 @@ Author: Thantez
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes">این قابلیت هنوز فعال نیست.</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
