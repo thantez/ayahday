@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Imports
 import gi
 gi.require_version('Gdk', '3.0')
@@ -7,7 +9,7 @@ from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 from json import load
-from os import remove
+from os import remove, path
 from playsound import playsound
 from sys import exit
 from tafsir_information import db
@@ -21,12 +23,13 @@ TRANSLATE_SOURCE = 'https://dl.salamquran.com/ayat/makarem.fa.kabiri-translation
 TAFSIR_SOURCE = 'https://dl.salamquran.com/ayat/qaraati.fa.qaraati-tafsir-16'
 AOZOBILLAH = SOUND_SOURCE + '/001000.mp3'
 BISMILLAH = SOUND_SOURCE + '/001001.mp3'
+BASE_DIR = path.dirname(path.realpath(__file__))
 
 # Components definitions
 ## CSS provider
 ### I wrote code from this: https://gist.github.com/carlos-jenkins/8923124
 provider = Gtk.CssProvider()
-provider.load_from_path('style.css')
+provider.load_from_path(f'{BASE_DIR}/style.css')
 screen = Gdk.Display.get_default_screen(Gdk.Display.get_default())
 GTK_STYLE_PROVIDER_PRIORITY_APPLICATION = 600
 Gtk.StyleContext.add_provider_for_screen(
@@ -36,7 +39,7 @@ Gtk.StyleContext.add_provider_for_screen(
 
 ## Main components
 builder = Gtk.Builder()
-builder.add_from_file('gui.glade')
+builder.add_from_file(f'{BASE_DIR}/gui.glade')
 ## Get Objects
 gui = builder.get_object('Window')
 ayah_img = builder.get_object('AyahImg')
@@ -84,7 +87,7 @@ def set_image(image):
     ayah_img.set_from_pixbuf(image_pixbuf)
 
 def play_audio(url, name):
-    path = f'./{name}.mp3'
+    path = f'{BASE_DIR}/{name}.mp3'
     urlretrieve(url, path)
     playsound(path)
     remove(path)
