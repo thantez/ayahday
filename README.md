@@ -8,6 +8,8 @@ So, I had an idea to writing a program that would show me a verse from this book
 
 This is a simple implementation. :))
 
+![ayahday screenshot](https://github.com/thantez/ayahday/blob/master/screenshot.png)
+
 # installation
 
 [install Python](https://realpython.com/installing-python/)
