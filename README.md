@@ -24,6 +24,7 @@ python logic.py
 
 # TODO
 
+* [ ] multithreading for avoiding of locks
 * [ ] bug fix and exception handling
 * [ ] documentation
 * [ ] unit tests
