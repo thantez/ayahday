@@ -14,6 +14,8 @@ This is a simple implementation. :))
 
 [install Python](https://realpython.com/installing-python/)
 
+[install vazir](https://github.com/rastikerdar/vazir-font/releases)
+
 clone this repo.
 
 then:
