@@ -1,9 +1,0 @@
-certifi==2020.12.5
-chardet==3.0.4
-idna==2.10
-playsound==1.2.2
-ruamel.yaml==0.16.12
-ruamel.yaml.clib==0.2.2
-urllib3==1.26.2
-vext==0.7.4
-vext.gi==0.7.4
