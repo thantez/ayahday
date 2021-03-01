@@ -1,4 +1,4 @@
 module.exports = {
-  WIDTH: 600,
+  WIDTH: 800,
   HEIGHT: 800,
 }

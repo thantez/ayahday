@@ -58,7 +58,6 @@ const createWindow = async () => {
     width: WIDTH,
     height: HEIGHT,
   })
-  console.log(params)
   mainWindow.loadURL(`file://${__dirname}/views/index.html${params}`)
 }
 
