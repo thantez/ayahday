@@ -67,65 +67,6 @@ const init = async (): Promise<InitComponents> => {
   return components
 }
 
-const makeImagesContainer = async (todayAyah: Ayah): Promise<QWidget> => {
-  const container: QWidget = new QWidget()
-  const layout: FlexLayout = new FlexLayout()
-  container.setLayout(layout)
-
-  const components: InitComponents = await init()
-  
-  const image: QPixmap = await getImage(todayAyah.imageUrl)
-  const imageLabel = new QLabel()
-  imageLabel.setPixmap(image)
-
-  const font: QFont = new QFont()
-  font.setFamily('Vazir')
-  font.setWeight(87) // Black
-  font.setPixelSize(19)
- 
-  const translationLabel: QLabel = new QLabel()
-  translationLabel.setText(todayAyah.translation)
-  translationLabel.setAlignment(8)
-  translationLabel.setFont(font)
-  translationLabel.setLineWidth(10)
-  translationLabel.setWordWrap(true)
-  translationLabel.setInlineStyle(`
-    margin: 0 20px;
-    width: ${WIDTH-100}px;
-    padding: 0 80px;
-  `)
-
-  const buttonsContainer: QWidget = makeButtonsContainer()
-
-  layout.addWidget(components.auzobillahLabel)
-  layout.addWidget(components.bismillahLabel)
-  layout.addWidget(imageLabel)
-  layout.addWidget(translationLabel)
-  layout.addWidget(buttonsContainer)
-
-  container.setInlineStyle(`
-    display: 'flex';
-    align-items: 'center';
-    flex-direction: 'column';
-    padding-top: 42px;
-    padding-bottom: 42px;
-    padding-left: 42px;
-    padding-right: 58px;
-    WIDTH: ${WIDTH}px;
-  `)
-
-  return container
-}
-
-const makeVerse = (surah: string, ayah: string): Verse => {
-  const padSurah = surah.padStart(3, '0')
-  const padAyah = ayah.padStart(3, '0')
-  return {
-    verse: `${surah}_${ayah}`,
-    padVerse: `${padSurah}${padAyah}`,
-  }
-}
-
 const makeButtonsContainer = (): QWidget => {
   const container: QWidget = new QWidget()
   const layout: FlexLayout = new FlexLayout()
@@ -165,7 +106,6 @@ const makeButtonsContainer = (): QWidget => {
     audioPlayer.seek(10)
   });
 
-
   // Backward seek button
   const bSeekButton: QPushButton = new QPushButton()
   bSeekButton.setObjectName('bSeekButton')
@@ -183,7 +123,76 @@ const makeButtonsContainer = (): QWidget => {
   layout.addWidget(bSeekButton)
   layout.addWidget(controlButton)
   layout.addWidget(fSeekButton)
+
+  container.setInlineStyle(`
+    display: 'flex';
+    align-items: 'center';
+    flex-direction: 'row';
+    justify-content: 'space-between';
+    width: 200px;
+  `)
+
   return container
+}
+
+const makeTranslationContainer = (translation: string): QWidget => {
+  const font: QFont = new QFont()
+  font.setFamily('Vazir')
+  font.setWeight(87) // Black
+  font.setPixelSize(19)
+ 
+  const translationLabel: QLabel = new QLabel()
+  translationLabel.setText(translation)
+  translationLabel.setAlignment(8)
+  translationLabel.setFont(font)
+  translationLabel.setLineWidth(10)
+  translationLabel.setWordWrap(true)
+  translationLabel.setInlineStyle(`
+    margin: 0 20px;
+    width: ${WIDTH-100}px;
+    padding: 0 80px;
+  `)
+
+  return translationLabel
+}
+
+const makeImagesContainer = async (todayAyah: Ayah): Promise<QWidget> => {
+  const container: QWidget = new QWidget()
+  const layout: FlexLayout = new FlexLayout()
+  container.setLayout(layout)
+
+  const components: InitComponents = await init()
+  
+  const image: QPixmap = await getImage(todayAyah.imageUrl)
+  const imageLabel = new QLabel()
+  imageLabel.setPixmap(image)
+
+  const translationContainer: QWidget = makeTranslationContainer(todayAyah.translation)
+  const buttonsContainer: QWidget = makeButtonsContainer()
+
+  layout.addWidget(components.auzobillahLabel)
+  layout.addWidget(components.bismillahLabel)
+  layout.addWidget(imageLabel)
+  layout.addWidget(translationContainer)
+  layout.addWidget(buttonsContainer)
+
+  container.setInlineStyle(`
+    display: 'flex';
+    align-items: 'center';
+    flex-direction: 'column';
+    padding: 40px;
+  `)
+
+  return container
+}
+
+const makeVerse = (surah: string, ayah: string): Verse => {
+  const padSurah = surah.padStart(3, '0')
+  const padAyah = ayah.padStart(3, '0')
+  return {
+    verse: `${surah}_${ayah}`,
+    padVerse: `${padSurah}${padAyah}`,
+  }
 }
 
 const getAyah = async (): Promise<Ayah> => {
@@ -272,8 +281,6 @@ try {
   const imagesContainer: QWidget = await makeImagesContainer(todayAyah)
 
   scrollArea.setWidget(imagesContainer)
-
-  const buttonsContainer: QWidget = makeButtonsContainer()
 
   layout.addWidget(scrollArea)
 
