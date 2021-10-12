@@ -1,10 +1,23 @@
 // Imports
-import { QMainWindow, QWidget, QLabel, FlexLayout, QPushButton, QIcon, QImage, QPixmap } from '@nodegui/nodegui'
+import { QMainWindow, QWidget, QLabel, FlexLayout, WidgetEventTypes, QPixmap } from '@nodegui/nodegui'
 import axios, { AxiosResponse } from 'axios'
-import logo from '../assets/logox200.png'
+import NodeMpv from "node-mpv";
+import fs from 'fs'
 
 // Constants
 const WIDTH = 800
+const PATH = `${process.cwd()}`
+const ASSETS = `${PATH}/assets`
+const TAFSIRFILES = JSON.parse(fs.readFileSync(`${ASSETS}/tafsir.json`, 'utf-8'))
+
+// Configs
+const audioPlayer = new NodeMpv({
+  audio_only: true,
+  time_update: 1,
+  binary: process.env.MPV_EXECUTABLE,
+  debug: true,
+  verbose: true,
+})
 
 // Interfaces
 interface InitComponents {
@@ -28,11 +41,11 @@ interface Ayah {
 }
 
 // Functions
-const init = (): InitComponents => {
-  const assets_path = `${process.cwd()}/assets`
+const init = async (): Promise<InitComponents> => {
+  await audioPlayer.start()
 
   const auzobillahImage: QPixmap = new QPixmap()
-  auzobillahImage.load(`${assets_path}/images/AUZOBILLAH.png`)
+  auzobillahImage.load(`${ASSETS}/images/AUZOBILLAH.png`)
   const scaledAuzobillah: QPixmap = auzobillahImage.scaled(WIDTH/4, WIDTH/4, 1)
 
   const auzobillahLabel: QLabel = new QLabel()
@@ -40,7 +53,7 @@ const init = (): InitComponents => {
   auzobillahLabel.setInlineStyle('margin-bottom: 10px;')
 
   const bismillahImage: QPixmap = new QPixmap()
-  bismillahImage.load(`${assets_path}/images/BISMILLAH.png`)
+  bismillahImage.load(`${ASSETS}/images/BISMILLAH.png`)
   const scaledBismillah: QPixmap = bismillahImage.scaled(WIDTH/2, WIDTH/2, 1)
 
   const bismillahLabel: QLabel = new QLabel()
@@ -59,15 +72,20 @@ const makeImagesContainer = async (todayAyah: Ayah): Promise<QWidget> => {
   const layout: FlexLayout = new FlexLayout()
   container.setLayout(layout)
 
-  const components: InitComponents = init()
+  const components: InitComponents = await init()
   
   const image: QPixmap = await getImage(todayAyah.imageUrl)
   const imageLabel = new QLabel()
   imageLabel.setPixmap(image)
  
+  const translationLabel: QLabel = new QLabel()
+  translationLabel.setText("hello")
+  translationLabel.setInlineStyle('color: red;')
+
   layout.addWidget(components.auzobillahLabel)
   layout.addWidget(components.bismillahLabel)
   layout.addWidget(imageLabel)
+  layout.addWidget(translationLabel)
 
   container.setInlineStyle(`
     display: 'flex';
@@ -110,8 +128,8 @@ const getAyah = async (): Promise<Ayah> => {
   // make urls
   const imageUrl: string = `https://everyayah.com/data/images_png/${verses.verse}.png`
   const audioUrl: string = `https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps/${verses.padVerse}.mp3`
-  const translationAudioUrl: string = `https://...` // TODO
-  const tafsirAudioUrl: string = `https://dl.salamquran.com/ayat/qaraati.fa.qaraati-tafsir-16/${verses.padVerse}.mp3`
+  const translationAudioUrl: string = `https://dl.salamquran.com/ayat/makarem.fa.kabiri-translation-16/${verses.padVerse}.mp3`
+  const tafsirAudioUrl: string = `https://dl.salamquran.com/ayat/qaraati.fa.qaraati-tafsir-16/${TAFSIRFILES[verses.padVerse]}.mp3`
 
   const todayAyah: Ayah = {
     number,
@@ -136,6 +154,14 @@ const getImage = async (url: string): Promise<QPixmap> => {
   return image
 }
 
+const loadAudios = async (audioUrl: string, translationAudioUrl: string, tafsirAudioUrl: string) => {
+  await audioPlayer.load(`${ASSETS}/audios/AOZOBILLAH.mp3`, 'append-play')
+  await audioPlayer.load(`${ASSETS}/audios/BISMILLAH.mp3`, 'append')
+  await audioPlayer.load(audioUrl, 'append')
+  await audioPlayer.load(translationAudioUrl, 'append')
+  await audioPlayer.load(tafsirAudioUrl, 'append')
+}
+
 // Main
 const win: QMainWindow = new QMainWindow()
 win.setWindowTitle("Ayah Day")
@@ -148,13 +174,24 @@ try {
   const todayAyah: Ayah = await getAyah()
 
   const imagesContainer: QWidget = await makeImagesContainer(todayAyah)
+
   layout.addWidget(imagesContainer)
+
+  await loadAudios(todayAyah.audioUrl, todayAyah.translationAudioUrl, todayAyah.tafsirAudioUrl)
 
   win.setCentralWidget(center)
 
  } catch (e) {
   console.log(e)
 }
+
+win.addEventListener(WidgetEventTypes.Close, async () => {
+  if (audioPlayer.isRunning()) {
+    await audioPlayer.stop()
+    await audioPlayer.quit()
+  }
+  console.log('closed')
+})
 
 win.show();
 
