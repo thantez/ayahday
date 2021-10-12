@@ -139,7 +139,7 @@ const makeTranslationContainer = (translation: string): QWidget => {
   const font: QFont = new QFont()
   font.setFamily('Vazir')
   font.setWeight(87) // Black
-  font.setPixelSize(19)
+  font.setPixelSize(18)
  
   const translationLabel: QLabel = new QLabel()
   translationLabel.setText(translation)
@@ -213,7 +213,7 @@ const getAyah = async (): Promise<Ayah> => {
   const verses: Verse = makeVerse(surah, number)
 
   // make urls
-  const imageUrl: string = `https://everyayah.com/data/images_png/2_282.png`
+  const imageUrl: string = `https://everyayah.com/data/images_png/${verses.verse}.png`
   const audioUrl: string = `https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps/${verses.padVerse}.mp3`
   const translationAudioUrl: string = `https://dl.salamquran.com/ayat/makarem.fa.kabiri-translation-16/${verses.padVerse}.mp3`
   const tafsirAudioUrl: string = `https://dl.salamquran.com/ayat/qaraati.fa.qaraati-tafsir-16/${TAFSIRFILES[verses.padVerse]}.mp3`
