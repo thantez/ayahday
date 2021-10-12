@@ -120,16 +120,46 @@ const makeButtonsContainer = (): QWidget => {
     audioPlayer.seek(-10)
   });
 
+  // Next track button
+  const nTrackButton: QPushButton = new QPushButton()
+  nTrackButton.setObjectName('nTrackButton')
+  nTrackButton.setText('||>')
+  nTrackButton.setFont(new QFont('Fira Code'))
+  nTrackButton.setInlineStyle(`
+    width: 50px;
+    height: 50px;
+  `)
+
+  nTrackButton.addEventListener('clicked', async () => {
+    audioPlayer.next()
+  });
+
+  // Previous track button
+  const pTrackButton: QPushButton = new QPushButton()
+  pTrackButton.setObjectName('pTrackButton')
+  pTrackButton.setText('<||')
+  pTrackButton.setFont(new QFont('Fira Code'))
+  pTrackButton.setInlineStyle(`
+    width: 50px;
+    height: 50px;
+  `)
+
+  pTrackButton.addEventListener('clicked', async () => {
+    audioPlayer.prev()
+  });
+
+  layout.addWidget(pTrackButton)
   layout.addWidget(bSeekButton)
   layout.addWidget(controlButton)
   layout.addWidget(fSeekButton)
+  layout.addWidget(nTrackButton)
 
   container.setInlineStyle(`
     display: 'flex';
     align-items: 'center';
     flex-direction: 'row';
     justify-content: 'space-between';
-    width: 200px;
+    width: 350px;
   `)
 
   return container
