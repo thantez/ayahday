@@ -1,5 +1,5 @@
 // Imports
-import { QMainWindow, QWidget, QLabel, FlexLayout, WidgetEventTypes, QPixmap, QFont } from '@nodegui/nodegui'
+import { QMainWindow, QWidget, QLabel, FlexLayout, WidgetEventTypes, QPixmap, QFont, QScrollArea, QScrollBar, QPushButton } from '@nodegui/nodegui'
 import axios, { AxiosResponse } from 'axios'
 import NodeMpv from "node-mpv";
 import fs from 'fs'
@@ -81,7 +81,7 @@ const makeImagesContainer = async (todayAyah: Ayah): Promise<QWidget> => {
   const font: QFont = new QFont()
   font.setFamily('Vazir')
   font.setWeight(87) // Black
-  font.setPixelSize(18)
+  font.setPixelSize(19)
  
   const translationLabel: QLabel = new QLabel()
   translationLabel.setText(todayAyah.translation)
@@ -89,19 +89,29 @@ const makeImagesContainer = async (todayAyah: Ayah): Promise<QWidget> => {
   translationLabel.setFont(font)
   translationLabel.setLineWidth(10)
   translationLabel.setWordWrap(true)
+  translationLabel.setInlineStyle(`
+    margin: 0 20px;
+    width: ${WIDTH-100}px;
+    padding: 0 80px;
+  `)
+
+  const buttonsContainer: QWidget = makeButtonsContainer()
 
   layout.addWidget(components.auzobillahLabel)
   layout.addWidget(components.bismillahLabel)
   layout.addWidget(imageLabel)
   layout.addWidget(translationLabel)
+  layout.addWidget(buttonsContainer)
 
   container.setInlineStyle(`
     display: 'flex';
     align-items: 'center';
     flex-direction: 'column';
-    margin: 25px 50px;
+    padding-top: 42px;
+    padding-bottom: 42px;
+    padding-left: 42px;
+    padding-right: 58px;
     WIDTH: ${WIDTH}px;
-    height: ${WIDTH}px;
   `)
 
   return container
@@ -114,6 +124,66 @@ const makeVerse = (surah: string, ayah: string): Verse => {
     verse: `${surah}_${ayah}`,
     padVerse: `${padSurah}${padAyah}`,
   }
+}
+
+const makeButtonsContainer = (): QWidget => {
+  const container: QWidget = new QWidget()
+  const layout: FlexLayout = new FlexLayout()
+  container.setObjectName('buttonsContainer')
+  container.setLayout(layout)
+
+  // Play & Pause button
+  const controlButton: QPushButton = new QPushButton()
+  controlButton.setObjectName('controlButton')
+  controlButton.setText('|>')
+  controlButton.setFont(new QFont('Fira Code'))
+  controlButton.setInlineStyle(`
+    width: 50px;
+    height: 50px;
+  `)
+
+  controlButton.addEventListener('clicked', async () => {
+    if (await audioPlayer.isPaused()) {
+      controlButton.setText('|>')
+    } else {
+      controlButton.setText('||')
+    }
+    audioPlayer.togglePause()
+  });
+
+  // Forward seek button
+  const fSeekButton: QPushButton = new QPushButton()
+  fSeekButton.setObjectName('fSeekButton')
+  fSeekButton.setText('>>')
+  fSeekButton.setFont(new QFont('Fira Code'))
+  fSeekButton.setInlineStyle(`
+    width: 50px;
+    height: 50px;
+  `)
+
+  fSeekButton.addEventListener('clicked', async () => {
+    audioPlayer.seek(10)
+  });
+
+
+  // Backward seek button
+  const bSeekButton: QPushButton = new QPushButton()
+  bSeekButton.setObjectName('bSeekButton')
+  bSeekButton.setText('<<')
+  bSeekButton.setFont(new QFont('Fira Code'))
+  bSeekButton.setInlineStyle(`
+    width: 50px;
+    height: 50px;
+  `)
+
+  bSeekButton.addEventListener('clicked', async () => {
+    audioPlayer.seek(-10)
+  });
+
+  layout.addWidget(bSeekButton)
+  layout.addWidget(controlButton)
+  layout.addWidget(fSeekButton)
+  return container
 }
 
 const getAyah = async (): Promise<Ayah> => {
@@ -173,17 +243,39 @@ const loadAudios = async (audioUrl: string, translationAudioUrl: string, tafsirA
 // Main
 const win: QMainWindow = new QMainWindow()
 win.setWindowTitle("Ayah Day")
+win.setFixedSize(WIDTH, WIDTH)
 
-const center: QWidget = new QWidget()
-const layout: FlexLayout = new FlexLayout()
-center.setLayout(layout)
 
 try {
+  const center: QWidget = new QWidget()
+  const layout: FlexLayout = new FlexLayout()
+  center.setLayout(layout)
+
+  const scrollBar: QScrollBar = new QScrollBar()
+  scrollBar.setInlineStyle('width: 16px;')
+
+  const scrollArea: QScrollArea = new QScrollArea()
+  scrollArea.setWidgetResizable(false)
+  scrollArea.setVerticalScrollBar(scrollBar)
+  scrollArea.setInlineStyle(`
+    display: 'flex';
+    width: ${WIDTH}px;
+    min-height: ${WIDTH}px;
+  `)
+  const scrollAreaContainer = scrollArea.takeWidget()
+  if (scrollAreaContainer) {
+    scrollAreaContainer.close()
+  }
+
   const todayAyah: Ayah = await getAyah()
 
   const imagesContainer: QWidget = await makeImagesContainer(todayAyah)
 
-  layout.addWidget(imagesContainer)
+  scrollArea.setWidget(imagesContainer)
+
+  const buttonsContainer: QWidget = makeButtonsContainer()
+
+  layout.addWidget(scrollArea)
 
   await loadAudios(todayAyah.audioUrl, todayAyah.translationAudioUrl, todayAyah.tafsirAudioUrl)
 
