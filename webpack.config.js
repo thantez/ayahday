@@ -39,5 +39,8 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"]
   },
-  plugins: [new CleanWebpackPlugin()]
+  plugins: [new CleanWebpackPlugin()],
+  experiments: {
+    topLevelAwait: true,
+  },
 };
