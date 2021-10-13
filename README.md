@@ -15,15 +15,18 @@ This is a simple implementation. :))
 
 ## installation
 
-[install Nodejs](https://nodejs.org/en/download/package-manager/)
+[install Nodejs](https://nodejs.org/en/download/package-manager/) and this dependencies:
+* [mpv](https://mpv.io/installation/)
+* [Vazir font](https://github.com/rastikerdar/vazir-font) (optional)
+* [Fira code font](https://github-wiki-see.page/m/tonsky/FiraCode/wiki/Installing) (optional)
 
 clone this repo.
 
 then:
 
 ```bash
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ## TODO
