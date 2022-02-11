@@ -1,0 +1,36 @@
+{
+  "name": "ayahday",
+  "version": "0.1.0",
+  "description": "One Ayah per day with Persian translation and Tafsir.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "neu run -- --window-enable-inspector",
+    "build": "neu build --release",
+    "bundle": "node scripts/bundle-appimage.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thantez/ayahday.git"
+  },
+  "keywords": [
+    "ayah",
+    "quran",
+    "day",
+    "surah",
+    "sura",
+    "aya",
+    "juz",
+    "islam",
+    "religion"
+  ],
+  "author": "Thantez (bakhshi@protonmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thantez/ayahday/issues"
+  },
+  "homepage": "https://github.com/thantez/ayahday#readme",
+  "devDependencies": {
+    "@neutralinojs/neu": "^9.1.2",
+    "neutralino-appimage-bundler": "^1.3.2"
+  }
+}
