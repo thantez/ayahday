@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Ayah Day</title>
+</head>
+  <body class="has-background-light">
+    <section class="section container">
+
+      <div class="block px-6"> <!-- Title Block -->
+        <div class="columns is-vcentered is-gapless">
+          <div class="column has-text-right tag is-dark">
+            <p class="vazir" id="surah"></p>
+          </div>
+          <div class="column has-text-centered has-text-weight-semibold	has-text-black is-two-thirds p-0">
+            <p class="uthmani title">
+              بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+            </p>
+          </div>
+          <div class="column has-text-left tag is-dark">
+            <p class="vazir" id="juz"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block is-flex is-flex-direction-column is-justify-content-center image-min-height"> <!-- Ayah Block -->
+        <div class="is-flex is-justify-content-center">
+          <figure id="fig"></figure>
+        </div>
+      </div>
+
+      <div class="block"> <!-- Audio Block -->
+        <div class="center">
+          <audio controls autoplay id="audio">
+            <source id="audio-src" src="assets/audios/aozobillah.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+
+      <div class="block"> <!-- Translate Block -->
+        <div class="content has-text-justified is-size-6 center px-6 pt-3 translation-min-height">
+          <p class="vazir" id="text"></p>
+        </div>
+      </div>
+    </section>
+    <script src="neutralino.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

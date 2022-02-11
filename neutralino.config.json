@@ -1,0 +1,32 @@
+{
+  "applicationId": "js.neutralino.ayahday",
+  "version": "0.1.0",
+  "defaultMode": "window",
+  "documentRoot": "/www/",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "nativeAllowList": [
+    "app.*",
+    "os.*",
+    "extensions.*"
+  ],
+  "modes": {
+    "window": {
+      "title": "Ayah Day",
+      "width": 1000,
+      "height": 734,
+      "window-borderless": false,
+      "icon": "/www/icon.png"
+    }
+  },
+  "cli": {
+    "binaryName": "ayahday",
+    "resourcesPath": "/www/",
+    "extensionsPath": "/extensions/",
+    "resourcesPath": "/www/",
+    "clientLibrary": "/www/neutralino.js",
+    "binaryVersion": "4.2.0",
+    "clientVersion": "3.1.0"
+  }
+}
