@@ -16,17 +16,14 @@ This is a simple implementation. :))
 ## installation
 
 [install Nodejs](https://nodejs.org/en/download/package-manager/) and this dependencies:
-* [mpv](https://mpv.io/installation/)
-* [Vazir font](https://github.com/rastikerdar/vazir-font) (optional)
-* [Fira code font](https://github-wiki-see.page/m/tonsky/FiraCode/wiki/Installing) (optional)
 
 clone this repo.
 
 then:
 
 ```bash
-yarn install
-yarn start
+$ cd ayahday
+$ neu run
 ```
 
 ## TODO
@@ -38,3 +35,4 @@ yarn start
 * [ ] install script
 * [ ] Adding a setting/options page for customization
 * [ ] Add a menu bar for more tools and a "About us" page.
+
