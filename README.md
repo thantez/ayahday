@@ -17,6 +17,8 @@ This is a simple implementation. :))
 
 [install Nodejs](https://nodejs.org/en/download/package-manager/) and this dependencies:
 
+* [Neutralino.js CLI](https://www.npmjs.com/package/@neutralinojs/neu)
+
 clone this repo.
 
 then:
