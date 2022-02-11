@@ -15,16 +15,20 @@ This is a simple implementation. :))
 
 ## installation
 
-[install Nodejs](https://nodejs.org/en/download/package-manager/) and this dependencies:
+### Use binary version
 
-* [Neutralino.js CLI](https://www.npmjs.com/package/@neutralinojs/neu)
+You can Install this for Windows or Linux by provided Installers in `release` section (right side).
 
-clone this repo.
+or
 
-then:
+### Build it manually
+
+[install Nodejs](https://nodejs.org/en/download/package-manager/) and then clone this repo.
+
+after that:
 
 ```bash
-$ cd ayahday
+$ npm install
 $ neu run
 ```
 
@@ -32,9 +36,7 @@ $ neu run
 
 * [ ] bug fix and exception handling
 * [ ] documentation
-* [ ] unit tests
 * [ ] app will start when linux boots up
 * [ ] install script
 * [ ] Adding a setting/options page for customization
-* [ ] Add a menu bar for more tools and a "About us" page.
-
+* [ ] Add a menu bar for more tools and a "Info" page.
