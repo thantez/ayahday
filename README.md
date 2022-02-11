@@ -13,6 +13,10 @@ every day when I turn on the computer.
 
 This is a simple implementation. :))
 
+## Screenshot
+
+![Screenshot-20220211162140-1020x752](https://user-images.githubusercontent.com/33148504/153594698-ba0e7861-9403-4260-8271-d5a26e987a20.png)
+
 ## installation
 
 ### Use binary version
