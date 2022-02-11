@@ -21,7 +21,7 @@ This is a simple implementation. :))
 
 ### Use binary version
 
-You can Install this for Windows or Linux by provided Installers in `release` section (right side).
+You can Install this for Windows or Linux by provided Installers in `Releases` section (right side).
 
 or
 
